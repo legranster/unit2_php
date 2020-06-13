@@ -46,6 +46,9 @@ include('inc/quiz.php');
             }
             if($show_score == true){
                 echo "<p>You got $_SESSION[totalCorrect] out of $totalQuestions correct!</p>";
+                echo '<form action="index.php" method="post">';
+                echo '<input type="submit" class="btn" name="replay" value ="Play Again!">';
+                echo "</form>";
             }
             
             ?>
