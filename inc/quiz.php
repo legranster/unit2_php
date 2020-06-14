@@ -4,7 +4,7 @@ session_start();
 // Include questions from the questions.php file
 include('generate_questions.php');
 // Make a variable to hold the total number of questions to ask
-$totalQuestions = count($questions);
+$totalQuestions = 10;
 // Make a variable to hold the toast message and set it to an empty string
 $toast = '';
 // Make a variable to determine if the score will be shown or not. Set it to false.
@@ -23,12 +23,7 @@ $show_score = false;
 */
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
-    echo "<p>Questions: ";
-    var_dump($questions);
-    echo "</p><p> POSTED Answer: ";
-    var_dump($_POST[answer]);
-    echo "</p>";
-    if($_POST[answer] == $questions[$_POST[index]][correctAnswer]){
+    if($_POST[answer] == $_SESSION[questions][$_POST[index]][correctAnswer]){
         $toast = "Good job! You mathed!";
         $_SESSION[totalCorrect] ++;
     } else{
@@ -77,14 +72,15 @@ if(count($_SESSION[used_indexes]) == $totalQuestions){
 } else {
     $show_score = false;
     if(count($_SESSION[used_indexes]) == 0){
+        $_SESSION[questions] = generate_questions(10);
         $_SESSION[totalCorrect] = 0;
         $toast = '';
     }
     do {
-        $index = array_rand($questions);
+        $index = array_rand($_SESSION[questions]);
     } while (in_array($index, $_SESSION[used_indexes]));
     $_SESSION[used_indexes][] = $index; 
-    $question = $questions[$index];
+    $question = $_SESSION[questions][$index];
     $answers = [
         $question['correctAnswer'],
         $question['firstIncorrectAnswer'],

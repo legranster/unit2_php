@@ -1,18 +1,20 @@
 <?php
 // Generate random questions
-$questions = [];
-// Loop for required number of questions
-for ($i = 0; $i < 10; $i++){
-    $questions[$i] = [];
-    $questions[$i]["leftAdder"] = rand(1,99);
-    $questions[$i]["rightAdder"] = rand(1,99);
-    $questions[$i]["correctAnswer"] = $questions[$i]["leftAdder"] + $questions[$i]["rightAdder"];
-    do {
-        $questions[$i]["firstIncorrectAnswer"] = rand(($questions[$i]["correctAnswer"] - 10), ($questions[$i]["correctAnswer"] + 10));
-    } while ($questions[$i]["firstIncorrectAnswer"] == $questions[$i]["correctAnswer"]);
-    do {
-        $questions[$i]["secondIncorrectAnswer"] = rand(($questions[$i]["correctAnswer"] - 10), ($questions[$i]["correctAnswer"] + 10));
-    } while ($questions[$i]["secondIncorrectAnswer"] == $questions[$i]["correctAnswer"] || $questions[$i]["secondIncorrectAnswer"] == $questions[$i]["firstIncorrectAnswer"]);
+function generate_questions($num_questions){
+    $questions = [];
+    for ($i = 0; $i < $num_questions; $i++){
+        $questions[$i] = [];
+        $questions[$i]["leftAdder"] = rand(1,99);
+        $questions[$i]["rightAdder"] = rand(1,99);
+        $questions[$i]["correctAnswer"] = $questions[$i]["leftAdder"] + $questions[$i]["rightAdder"];
+        do {
+            $questions[$i]["firstIncorrectAnswer"] = rand(($questions[$i]["correctAnswer"] - 10), ($questions[$i]["correctAnswer"] + 10));
+        } while ($questions[$i]["firstIncorrectAnswer"] == $questions[$i]["correctAnswer"]);
+        do {
+            $questions[$i]["secondIncorrectAnswer"] = rand(($questions[$i]["correctAnswer"] - 10), ($questions[$i]["correctAnswer"] + 10));
+        } while ($questions[$i]["secondIncorrectAnswer"] == $questions[$i]["correctAnswer"] || $questions[$i]["secondIncorrectAnswer"] == $questions[$i]["firstIncorrectAnswer"]);
+    }
+    return $questions;
 }
 // Get random numbers to add
 
